@@ -3,6 +3,7 @@ library(lubridate)
 set.seed(123)
 
 # випадкові дати у діапазоні
+#start_date1 <- dmy("01-03-25")
 start_date <- as.Date("2025-03-01")
 end_date <- as.Date("2025-03-31")
 
