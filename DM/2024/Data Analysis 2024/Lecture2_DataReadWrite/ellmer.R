@@ -1,0 +1,28 @@
+https://github.com/tidyverse/ellmer
+install.packages("ellmer")
+library(ellmer)
+
+chat <- chat_openai(
+  model = "gpt-4o-mini",
+  system_prompt = "You are a friendly but terse assistant.",
+)
+live_console(chat)
+
+install.packages("shinychat")
+library(shiny)
+library(shinychat)
+
+ui <- bslib::page_fluid(
+  chat_ui("chat")
+)
+
+server <- function(input, output, session) {
+  chat <- ellmer::chat_openai(system_prompt = "You're a trickster who answers in riddles")
+  
+  observeEvent(input$chat_user_input, {
+    stream <- chat$stream_async(input$chat_user_input)
+    chat_append("chat", stream)
+  })
+}
+
+shinyApp(ui, server)
